@@ -67,7 +67,7 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-preview" data-ng-repeat="p in profiles">
-                    <a href="#">
+                    <a data-ng-href="profile?p={{p.pid}}" target="_blank">
                         <h2 class="post-title" style="color: darkgrey">
                             {{ p.title }}
                         </h2>
@@ -75,7 +75,7 @@
                             {{ p.name }}, {{p.age}} yrs from {{ p.currentcity }}
                         </h3>
                     </a>
-                    <p class="post-meta">{{p.occupation}} - {{p.highesteducation}}</p>
+                    <p class="post-meta">{{p.occupation}} - {{p.education}}</p>
 					<hr>
                 </div>
                 <!-- Pager -->
@@ -118,9 +118,6 @@
 
 var app = angular.module('myApp', []);
 app.controller('myCtrl', function($scope, $http) {
-		
-	$scope.firstName= "John";
-	$scope.lastName= "Doe";
 
 	$scope.profiles = [];
 		
@@ -134,11 +131,12 @@ app.controller('myCtrl', function($scope, $http) {
 			for (var i=0; i<count; i++) {
 				console.log(entry[i]['gsx$title']['$t']);
 				var row = {
+					pid: getFieldValue(entry[i], 'pid'),
 					title: getFieldValue(entry[i], 'title'),
 					name: getFieldValue(entry[i], 'name'),
 					currentcity: getFieldValue(entry[i], 'currentcity'),
 					occupation: getFieldValue(entry[i], 'occupation'),
-					highesteducation: getFieldValue(entry[i], 'highesteducation'),
+					education: getFieldValue(entry[i], 'education'),
 					age: getAgeFromDoB(getFieldValue(entry[i], 'dob'))
 				};
 				$scope.profiles.push(row);
